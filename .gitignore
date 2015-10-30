@@ -1,0 +1,19 @@
+*.class
+
+#IDE
+.mtj.tmp/
+
+out/
+.idea
+*.iml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#maven
+target/
+
+out/
+
