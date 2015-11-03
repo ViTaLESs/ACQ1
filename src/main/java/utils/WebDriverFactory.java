@@ -1,10 +1,16 @@
 package utils;
 
 
+import net.anthavio.phanbedder.Phanbedder;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
+
+import java.io.File;
 
 /**
  * Created by ViTaLES on 18.10.2015.
@@ -26,35 +32,35 @@ public class WebDriverFactory {
 
     public static final String grid = PropertyLoader.loadProperty("grid2.hub");
 
+    public static final String driverName = PropertyLoader.loadProperty("grid2.hub");
+
     public WebDriverFactory() {
     }
 
-    public static WebDriverWrapper initDriver(){
+    public static WebDriverWrapper initDriver(String driverName){
+        WebDriverWrapper driverWripper = null;
 
-
-        if(FIREFOX.equals(browserName)){
-            driverWrapper = new WebDriverWrapper( new FirefoxDriver());
-        }else if(PHANTOMJS.equals(browserName)){
-/*
+        if(driverName.equals(FIREFOX)){
+            driverWripper = new WebDriverWrapper( new FirefoxDriver());
+        }else if(driverName.equals(PHANTOMJS)){
             File phantomjs = Phanbedder.unpack();
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, phantomjs.getAbsolutePath());
-            driverWrapper = new WebDriverWrapper( new PhantomJSDriver(caps));
-*/
+            driverWripper = new WebDriverWrapper( new PhantomJSDriver(caps));
 
-        } else if(CHROME.equals(browserName)){
+        } else if(driverName.equals(CHROME)){
             ChromeOptions options = new ChromeOptions();
-            driverWrapper = new WebDriverWrapper( new ChromeDriver(options));
+            driverWripper = new WebDriverWrapper( new ChromeDriver(options));
         }
 
         else {
-            Assert.fail("invalid driver name");
+            Assert.fail(driverName + " - invalid driver name");
         }
 
-        driverWrapper.manage().deleteAllCookies();
-        driverWrapper.manage().window().maximize();
+        driverWripper.manage().deleteAllCookies();
+        driverWripper.manage().window().maximize();
 
-        return driverWrapper;
+        return driverWripper;
     }
 
 }

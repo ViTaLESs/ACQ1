@@ -4,6 +4,7 @@ package Tests;
 import logger.Log4Test;
 import org.testng.annotations.*;
 import pages.Ellos;
+import utils.PropertyLoader;
 import utils.WebDriverFactory;
 import utils.WebDriverWrapper;
 
@@ -16,7 +17,7 @@ public class Fixture {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        driverWrapper = WebDriverFactory.initDriver();// wrong place be carefully with wrappers
+        driverWrapper = WebDriverFactory.initDriver(PropertyLoader.loadProperty("browser.name"));// wrong place be carefully with wrappers
         driverWrapper.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 
         try {
